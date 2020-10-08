@@ -86,8 +86,24 @@ app.post('/products', (req,res) => {
 });
 
 app.get('/users/:id', (req,res) => {
-    sql.query('SELECT * FROM users WHERE id')
-})
+    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture , products.name FROM users INNER JOIN products ON products.id = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
+        
+        if (err) {
+            throw err;
+          }
+          res.send(result);
+        });
+      });
+
+app.get('/products/:id', (req,res) => {
+    sql.query(`SELECT products.id, products.name AS products_name, products.idUser, products.price, products.category, products.description, products.picture , users.name FROM products INNER JOIN users ON users.id = products.idUser WHERE products.id = ${req.params.id}`, (err, result) => {
+            
+        if (err) {
+                throw err;
+              }
+            res.send(result);
+            });
+          });
 
 
 
