@@ -8,24 +8,15 @@ class SignUp extends Component {
         <Form>
           <Row>
             <Col sm={6}>
-            <Form.Label class="float-left">First Name</Form.Label>
-              <Form.Control placeholder="Enter your first name" />
+            <Form.Label class="float-left">Name</Form.Label>
+              <Form.Control placeholder="Enter your name" />
             </Col>
-            <Col sm={6}>
-            <Form.Label class="float-left">Last Name</Form.Label>
-              <Form.Control placeholder="Enter your last name" />
-            </Col>
-            </Row>
-            <Row>
             <Col sm={6}>
             <Form.Label class="float-left">Email address</Form.Label>
               <Form.Control placeholder="Enter  email" />
             </Col>
-            <Col sm={6}>
-            <Form.Label class="float-left">Profile Picture</Form.Label>
-              <Form.Control placeholder="Enter your profile picture link's" />
-            </Col>
             </Row>
+           
             <Row>
             <Col sm={6}>
             <Form.Label class="float-left">Password</Form.Label>
@@ -36,6 +27,13 @@ class SignUp extends Component {
               <Form.Control placeholder="Password" />
             </Col>
           </Row>
+          <Row>
+         
+         <Col sm={12}>
+         <Form.Label class="float-left">Profile Picture</Form.Label>
+           <Form.Control placeholder="Enter your profile picture link's" />
+         </Col>
+         </Row>
        
           <Button className ="Button" variant="primary" type="submit">SignUp</Button>
         </Form>
