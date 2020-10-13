@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
+import axios  from 'axios' //il faut l'installer
+//import { Redirect } from "react-router-dom";//il faut l'installer
 import { Button, Form } from 'react-bootstrap'
-import axios  from 'axios' 
-import { Redirect } from 'react-router-dom'
-
 
 class SignIn extends Component {
-
   constructor(){
     super();
     this.state= {
       email:'',
       password:'',
       message: '',
-      redirect: false,
+      redirect: null,
     }
   }
   render() {
-
-      if(this.state.redirect === false) {
-        return (
-    
+    return (
       <div className="container">
-           <span className="ingredient">{this.state.message}<br/></span>
+        <span className="ingredient">{this.state.message}<br/></span>
+
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="float-left">Email address</Form.Label>
@@ -35,15 +31,13 @@ class SignIn extends Component {
             <Form.Label className="float-left">Password</Form.Label>
             <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.setChange.bind(this)} name="password"/>
           </Form.Group>
-          <Button className ="Button" variant="primary" type="submit" onClick={this.tryToSignIn.bind(this)}>SignIn</Button>
+          <Button className ="Button" variant="primary" type="submit" onClick={this.tryToSignIn.bind(this)}>Sign In</Button>
         </Form>
-      </div>
-      )
-    }else {
-      return <Redirect to='/user'/>;
-      
-    }
-  }
+        </div>
+    )
+    
+    
+}
   setChange(event){
     let myinput = event.target
     let inputname = myinput.name
@@ -55,7 +49,7 @@ class SignIn extends Component {
   //---------Call API
   async tryToSignIn(e) {
   e.preventDefault();
-  console.log('my data' , this.state.email + this.state.password)
+  console.log('my datat: ' , this.state.email + this.state.password)
     try {
       let result = await axios.post(`http://localhost:8000/users/sign-in`, {email:this.state.email, password: this.state.password})
     console.log(result);
@@ -64,10 +58,10 @@ class SignIn extends Component {
       localStorage.setItem('myToken', result.data.token);
       this.setState({
         token : result.data.token,
-        redirect: true,
+        redirect: '/productlist',
         email:'',
-        password:'',
-        message: '',
+       password:'',
+       message: '',
       }) 
     }else if(result.status === 205){
       this.setState({
@@ -82,10 +76,26 @@ class SignIn extends Component {
         email:'',
         password:'',
       })
-        console.log(error);
+      console.log(error);
     }
 }
  
+  // async test(e) { 
+  //   e.preventDefault();
+  //   
+  //   try {
+  //       let result = await axios.get(`http://localhost:8000/users`)
+  //        console.log(result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  
+  //   this.setState({
+  //       email:'',
+  //       passwoard:'',     
+  //  });
+  // } 
+  
 }
 
 export default SignIn;

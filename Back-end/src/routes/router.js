@@ -22,7 +22,7 @@ app.post("/users/sign-up", (req, res) => {
       `INSERT INTO users (name,email,password,picture) VALUES ('${req.body.name}','${req.body.email}','${passwordHash}','${req.body.picture}')`
     );
   });
-  res.send("the user is enregistered");
+  res.status(200).send("the user is enregistered");
 }catch (err) {
     console.log(err)
 }
@@ -47,11 +47,11 @@ app.post("/users/sign-in", (req, res) => {
                 expiresIn: 86400, // expires in 24 hours
               }
             );
-            res.status(200).send({ auth: true, token: token });
+            res.status(200).json({ auth: true, token: token });
           } else {
          
-            res.status(405).send({
-              msg: "Sorry",
+            res.status(205).send({
+              msg: "Sorry it is not the same password",
             });
           }
         });

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import SignIn from './SignIn'
-import SignUp from './SignUp'
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-import Home from './Home';
 import CreateProducts from './CreateProducts'
 import ProductsList from './ProductsList'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 import Profil from './Profil'
+import {Button} from 'react-bootstrap'
 
 
 import {
@@ -16,32 +14,32 @@ import {
 } from "react-router-dom";
 
 
-class Header extends Component {
+class ConnectedHeader extends Component {
+  constructor() {
+    super()
+    this.state = {
+      redirect: false,
+    }
+  }
   render() {
     return (
       <Router>
       <div>
       <Navbar bg="dark" variant="dark">
          
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/user">Profil</Nav.Link>
        
-            <Nav.Link href="/sign-up">Sign-up</Nav.Link>
+            <Nav.Link href="/productslist">Products</Nav.Link>
           
-            <Nav.Link href="/sign-in">Sign-in</Nav.Link>
+            <Nav.Link href="/createproducts">Add Product</Nav.Link>
+
+            <Button className ="ButtonSignOut" variant="primary" type="submit" onClick={this.signOut.bind(this)}>SignOut</Button>
         
           </Navbar>
 
         {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
         <Switch>
-          <Route exact={true} path="/">
-          <Home/>
-          </Route>
-          <Route  exact={true} path="/sign-in" component={SignIn}/>
-          
-          <Route exact={true} path="/sign-up">
-            <SignUp/>
-          </Route>
           <Route exact={true} path="/user">
           <Profil/>
           </Route>
@@ -56,5 +54,11 @@ class Header extends Component {
   
     );
   };
+  signOut() {
+    localStorage.removeItem("myToken")
+    
+  }
 }
-export default Header;
+
+
+export default ConnectedHeader;

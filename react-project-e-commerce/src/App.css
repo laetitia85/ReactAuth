@@ -37,10 +37,29 @@
   }
 }
 
+#root{
+  background-color: #635C5C;
+  height: 1000px;
+}
+
 .container{
   margin-top: 5% !important;
+  background-color: #C5DCF1;
+  color: black;
 }
 
 .Button{
   margin-top: 5%;
+  margin-bottom: 5%;
 }
+
+.ButtonSignOut {
+  margin-left: 70%;
+}
+
+span.ingredient {
+  color: #f00;
+  font-size: 2em;
+}
+
+

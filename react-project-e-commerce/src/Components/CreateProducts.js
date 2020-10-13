@@ -8,27 +8,27 @@ class AddProducts extends Component {
         <Form>
           <Row>
             <Col sm={6}>
-              <Form.Label class="float-left">Product Name</Form.Label>
+              <Form.Label className="float-left">Product Name</Form.Label>
               <Form.Control placeholder="Enter your product name" />
             </Col>
             <Col sm={6}>
-              <Form.Label class="float-left">Short Description</Form.Label>
+              <Form.Label className="float-left">Short Description</Form.Label>
               <Form.Control placeholder="Enter a short description" />
             </Col>
           </Row>
           <Row>
             <Col sm={6}>
-              <Form.Label class="float-left">Category</Form.Label>
+              <Form.Label className="float-left">Category</Form.Label>
               <Form.Control placeholder="Enter a Category" />
             </Col>
             <Col sm={6}>
-              <Form.Label class="float-left">Price</Form.Label>
+              <Form.Label className="float-left">Price</Form.Label>
               <Form.Control placeholder="Price of the product" />
             </Col>
           </Row>
           <Row>
             <Col sm={12}>
-              <Form.Label class="float-left">Picture Link</Form.Label>
+              <Form.Label className="float-left">Picture Link</Form.Label>
               <Form.Control placeholder="Link to the picture" />
             </Col>
           </Row>
