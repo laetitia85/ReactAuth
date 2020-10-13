@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import axios  from 'axios' 
 
+
 class SignUp extends Component {
   constructor(){
     super();
@@ -9,7 +10,7 @@ class SignUp extends Component {
       name:'',
       email:'',
       password:'',
-      picture: '',
+      picture_profil: '',
       message: '',
     }
   }
@@ -44,7 +45,7 @@ class SignUp extends Component {
          
          <Col sm={12}>
          <Form.Label className="float-left">Profile Picture</Form.Label>
-           <Form.Control value={this.state.picture} onChange={this.setChange.bind(this)} name="picture" placeholder="Enter your profile picture link's" />
+           <Form.Control value={this.state.picture_profil} onChange={this.setChange.bind(this)} name="picture_profil" placeholder="Enter your profile picture link's" />
          </Col>
          </Row>
        
@@ -65,16 +66,16 @@ class SignUp extends Component {
 
   async tryToSignUp(e) {
     e.preventDefault();
-    console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture)
+    console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture_profil)
       try {
-        let result = await axios.post(`http://localhost:8000/users/sign-up`, {name:this.state.name, email:this.state.email, password:this.state.password,picture:this.state.picture})
+        let result = await axios.post(`http://localhost:8000/users/sign-up`, {name:this.state.name, email:this.state.email, password:this.state.password,picture_profil:this.state.picture_profil})
       console.log(result);
           if(result.status === 200){
         this.setState({
           name: '',
           email:'',
           password:'',
-          picture: '',
+          picture_profil: '',
           message: 'You have been registered',
         }) 
       }
@@ -83,7 +84,7 @@ class SignUp extends Component {
           name:'',
           email:'',
           password:'',
-          picture:'',
+          picture_profil:'',
           message: 'Something wrong',
 
         })

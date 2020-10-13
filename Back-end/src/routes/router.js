@@ -19,7 +19,7 @@ app.post("/users/sign-up", (req, res) => {
     try{
   bcrypt.hash(req.body.password, saltRounds).then(function (passwordHash) {
     sql.query(
-      `INSERT INTO users (name,email,password,picture) VALUES ('${req.body.name}','${req.body.email}','${passwordHash}','${req.body.picture}')`
+      `INSERT INTO users (name,email,password,picture_profil) VALUES ('${req.body.name}','${req.body.email}','${passwordHash}','${req.body.picture_profil}')`
     );
   });
   res.status(200).send("the user is enregistered");
@@ -65,7 +65,7 @@ app.post("/users/sign-in", (req, res) => {
 });
 
 app.get('/products',(req,res) => {
-    sql.query("SELECT id, name, price FROM products", (err, response) => {
+    sql.query("SELECT id, name, price, picture FROM products", (err, response) => {
         if (err) {
           throw err;
         }
@@ -86,12 +86,12 @@ app.post('/products', (req,res) => {
 });
 
 app.get('/users/:id', (req,res) => {
-    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture , products.name FROM users INNER JOIN products ON products.id = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
+    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture_profil , products.name FROM users INNER JOIN products ON products.idUser = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
         
         if (err) {
             throw err;
           }
-          res.send(result);
+          res.json(result);
         });
       });
 

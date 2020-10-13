@@ -41,6 +41,7 @@ class SignIn extends Component {
       )
     }else {
       return <Redirect to='/user'/>;
+     
       
     }
   }
@@ -69,6 +70,8 @@ class SignIn extends Component {
         password:'',
         message: '',
       }) 
+        window.location.reload();
+     
     }else if(result.status === 205){
       this.setState({
         message: 'PLEASE TRY AGAIN',

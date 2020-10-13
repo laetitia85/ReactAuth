@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import ConnectedHeader from "./Components/ConnectedHeader";
+// import ConnectedHeader from "./Components/ConnectedHeader";
 import Header from "./Components/Header";
-import axios from "axios";
-const jwt = require("jsonwebtoken");
+// import axios from "axios";
+// const jwt = require("jsonwebtoken");
 
 class App extends Component {
   constructor() {
@@ -13,34 +13,27 @@ class App extends Component {
     };
   }
   render() {
-    if (localStorage.getItem("myToken")) {
-      return (
-        <div className="App">
-          <ConnectedHeader />
-        </div>
-      );
-    } else {
-      return (
+  return (
         <div>
           <Header />
         </div>
-      );
+  )
     }
-  }
 
-  async componentDidMount() {
-  try {
-    let token = localStorage.getItem("myToken");
-    const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
-    const userId = decodeToken.id;
 
-    let result = await axios.get(`http://localhost:8000/users/${userId}`);
+//   async componentDidMount() {
+//   try {
+//     let token = localStorage.getItem("myToken");
+//     const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
+//     const userId = decodeToken.id;
 
-    this.setState({ picture: result.picture });
-  } catch (err) {
-    console.log(err);
-  }
-}
+//     let result = await axios.get(`http://localhost:8000/users/${userId}`);
+
+//     this.setState({ picture: result.picture });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
 
 //   componentDidMount() {
