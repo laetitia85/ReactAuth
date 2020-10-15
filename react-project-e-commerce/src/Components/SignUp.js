@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import axios  from 'axios' 
+import { connect } from "react-redux"
+import { addUserName, addUserEmail, addUserPassword } from "../store/actions/users"
 
 
 class SignUp extends Component {
@@ -93,4 +95,16 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = (state) => ({
+  newUserName: state.userReducer.name,
+  newUserEmail: state.userReducer.email,
+  newUserPassword: state.userReducer.password
+});
+
+const mapDispatchToProps = {
+  addUserName,
+  addUserEmail,
+  addUserPassword,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
