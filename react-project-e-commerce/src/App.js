@@ -1,59 +1,48 @@
 import React, { Component } from "react";
 import "./App.css";
-// import ConnectedHeader from "./Components/ConnectedHeader";
 import Header from "./Components/Header";
-// import axios from "axios";
-// const jwt = require("jsonwebtoken");
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SignIn from "./Components/SignIn";
+import SignUp from "./Components/SignUp";
+import Home from "./Components/Home";
+import CreateProducts from "./Components/CreateProducts";
+import ProductsList from "./Components/ProductsList";
+import Profil from "./Components/Profil";
+import Product from "./Components/Product";
+
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      picture: null,
-    };
-  }
   render() {
-  return (
-        <div>
-          <Header />
-        </div>
-  )
-    }
+    return (
+      <div>
+        <Header />
 
+        <Router>
+          <Switch>
+            <Route exact={true} path="/user" component={Profil} />
 
-//   async componentDidMount() {
-//   try {
-//     let token = localStorage.getItem("myToken");
-//     const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
-//     const userId = decodeToken.id;
+            <Route exact={true} path="/productslist" component={ProductsList} />
 
-//     let result = await axios.get(`http://localhost:8000/users/${userId}`);
+            <Route
+              exact={true}
+              path="/createproducts"
+              component={CreateProducts}
+            />
+            <Route
+              exact={true}
+              path="/productlist/:productId"
+              component={Product}
+            />
+            <Route exact={true} path="/" component={Home} />
+            <Route exact={true} path="/sign-in" component={SignIn} />
 
-//     this.setState({ picture: result.picture });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+            <Route exact={true} path="/sign-up" component={SignUp} />
+          </Switch>
+        </Router>
+      </div>
+    );
+  }
 
-
-//   componentDidMount() {
-//       try {
-//     let token = localStorage.getItem("myToken");
-//     jwt.verify(token, "x_TOKEN_SECRET", async (err, decoded) => {
-//        console.log(decoded)
-     
-//       let result = await axios
-//         .get(`http://localhost:8000/users/${decoded.id}`)
-        
-//           this.setState({ picture: result.picture })
-//       });
-// }catch(err){
-//   console.log(err);
-// }
-        
-
-//   }
 }
-
 
 export default App;

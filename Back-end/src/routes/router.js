@@ -86,7 +86,7 @@ app.post('/products', (req,res) => {
 });
 
 app.get('/users/:id', (req,res) => {
-    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture_profil , products.name FROM users INNER JOIN products ON products.idUser = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
+    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture_profil , products.name, products.id AS products_id FROM users INNER JOIN products ON products.idUser = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
         
         if (err) {
             throw err;
@@ -103,6 +103,14 @@ app.get('/products/:id', (req,res) => {
               }
             res.send(result);
             });
+          });
+
+app.delete('/users/:userID', (req, res) => {
+  sql.query(`DELETE FROM users WHERE id ='${req.params.userID}`, function (err, result) {
+    if (err) throw res.status(400).send('there is an error');
+      console.log("Number of records deleted: " + result.affectedRows);
+      res.status(200).end("This product is  deleted")
+            })
           });
 
 

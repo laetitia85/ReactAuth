@@ -34,11 +34,11 @@ class SignUp extends Component {
             <Row>
             <Col sm={6}>
             <Form.Label className="float-left">Password</Form.Label>
-              <Form.Control value={this.state.password} onChange={this.setChange.bind(this)} name="password"placeholder="Paswword" />
+              <Form.Control type="password" value={this.state.password} onChange={this.setChange.bind(this)} name="password"placeholder="Paswword" />
             </Col>
             <Col sm={6}>
             <Form.Label className="float-left">Confirm Password</Form.Label>
-              <Form.Control placeholder="Password" />
+              <Form.Control type="password" placeholder="Password" />
             </Col>
           </Row>
           <Row>
@@ -76,7 +76,7 @@ class SignUp extends Component {
           email:'',
           password:'',
           picture_profil: '',
-          message: 'You have been registered',
+          message: 'You have been registered, go sign-in',
         }) 
       }
       } catch (error) {

@@ -3,7 +3,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import axios  from 'axios' 
 const jwt = require("jsonwebtoken");
 
-class AddProducts extends Component {
+class CreateProducts extends Component {
   constructor(){
     super();
     this.state= {
@@ -101,4 +101,4 @@ class AddProducts extends Component {
   }
 }
 
-export default AddProducts;
+export default CreateProducts;

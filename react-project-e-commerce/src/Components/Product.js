@@ -1,48 +1,68 @@
 import React, { Component } from 'react';
 import axios  from 'axios' 
-import  { Link } from 'react-router-dom'
+import { Button } from "react-bootstrap";
 
 class Product extends Component {
     constructor() {
         super()
         this.state = {
-            items : [],
+            id: '',
+            userName: '',
+            productName: '',
+            picture: '',
+            price: '',
+            description: '',
+            category: '',
         }
     }
     render() {
-
-        return (
-            <div className="container">
-                {this.state.items.map(item => (
-                    <div key={item.id} className="productList" onClick={this.showDetail.bind(this)} id={item.id}>
-                        <Link to={`/productslist/${item.id}`}>
-
-                       <img height='200px' width='200px' alt='' src= {item.picture}></img>
-                        </Link>
-                        <div className="productNamePrice">
-                            <p>{item.name}</p>
-                            <p>{item.price}</p>
+        if (this.state !== null) {
+            return (
+                <div>
+                    <h2>{this.state.productName}</h2>
+                    <div key={this.state.id} className="productElement">
+                        <img src={this.state.picture} alt='' height='20%' width='20%'></img>
+                    
+                        <div className="description">
+                             <b>proposed by: {this.state.userName}</b>
+                            <p><b>the price is:</b> {this.state.price ||'There is no price'}</p>
+                            <p><b>Category: </b>{this.state.category || 'There is no category'}</p>
+                            <p><b>description:</b><br></br>{this.state.description || 'There is no description'}</p>
                         </div>
                     </div>
-                )
-                )}
-            </div>
-        )
-}
-
-
-    async componentDidMount() {
-        try {
-          let result = await axios.get('http://localhost:8000/products')
-          console.log('aaaaaaaaaaaaa')
-          console.log(result.data);
-          this.setState({
-           items: result.data
-    
-          })
-        } catch (error) {
-          console.log(error);
+                    <Button className ="Buttons" variant="primary" type="submit" >Add to Basket</Button>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                   There is no information 
+                </div>
+            )
         }
     }
+    async componentDidMount() {
+        // console.log('in the product component');
+        // console.log(this.props.productID);
+
+        try {
+            let productData = await axios.get(`http://localhost:8000/products/${this.props.productID}`)
+            console.log(productData.data[0]);
+            this.setState({
+                id: productData.data[0].id,
+                userName: productData.data[0].name,
+                productName: productData.data[0].products_name,
+                picture: productData.data[0].picture,
+                price: productData.data[0].price,
+                description: productData.data[0].description,
+                category: productData.data[0].category
+            })
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+     
 }
 export default Product;

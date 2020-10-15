@@ -70,7 +70,7 @@ class SignIn extends Component {
         password:'',
         message: '',
       }) 
-        window.location.reload();
+      
      
     }else if(result.status === 205){
       this.setState({
