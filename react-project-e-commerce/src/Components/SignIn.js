@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap'
 import axios  from 'axios' 
 import { Redirect } from 'react-router-dom'
+import {connect} from 'react-redux'
+import {signInUser} from '../store/actions/users'
 
 
 class SignIn extends Component {
@@ -62,9 +64,15 @@ class SignIn extends Component {
     console.log(result);
         if(result.status === 200){
       console.log('Sign is good', result.data.token);
-      localStorage.setItem('myToken', result.data.token);
+      // localStorage.setItem('myToken', result.data.token);
+      let x= {
+        name: this.state.name,
+        email: this.state.email,
+        id: result.data.id,
+        token: result.data.token,
+      }
+      this.props.signInUser(x)
       this.setState({
-        token : result.data.token,
         redirect: true,
         email:'',
         password:'',
@@ -91,4 +99,17 @@ class SignIn extends Component {
  
 }
 
-export default SignIn;
+const mapStateToProps = (state) => ({
+  name: state.usersReducer.name,
+  email: state.usersReducer.email,
+  id: state.usersReducer.id,
+  token: state.usersReducer.token,
+
+});
+
+const mapDispatchToProps = {
+  signInUser,
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

@@ -1,21 +1,25 @@
 const initialStates = {
-    name: "",
-    email: "",
-    id:null,
-    token: null,
+    name: '',
+    category: '',
+    price: '',
+    description: '',
+    picture: '',
+    userProducts: [],
  
 };
 
-const usersReducer = (state = initialStates, action) => {
+const productsReducer = (state = initialStates, action) => {
   switch (action.type) {
-    case "SIGNIN_USER":
+    case "ADD_PRODUCT":
       return {
         ...state,
         name: action.name,
-        email: action.email,
-        id: action.id,
-        token: action.token,
-    
+        category: action.category,
+        price: action.price,
+        description: action.description,
+        picture: action.picture,
+        userProducts: state.userProduts.push(action.productList),
+  
       };
     // case "ADD_USER_EMAIL":
     //   return {
@@ -39,4 +43,4 @@ const usersReducer = (state = initialStates, action) => {
   }
 };
 
-export default usersReducer;
+export default productsReducer;

@@ -4,7 +4,10 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
-const jwt = require("jsonwebtoken");
+import {connect} from 'react-redux'
+
+// const jwt = require("jsonwebtoken");
+
 
 class Header extends Component {
   constructor() {
@@ -14,7 +17,7 @@ class Header extends Component {
     };
   }
   render() {
-    if (localStorage.getItem("myToken")) {
+    if (this.props.token) {
       return (
         <Router>
           <div>
@@ -79,24 +82,39 @@ class Header extends Component {
     }
   }
 
-  async componentDidMount() {
-    try {
-      let token = localStorage.getItem("myToken");
-      const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
-      const userId = decodeToken.id;
+  // async componentDidMount() {
 
-      let result = await axios.get(`http://localhost:8000/users/${userId}`);
-      // console.log(result)
+    async componentDidUpdate(prevProps) 
+    // if(this.props.token) {
+  
+      {if (this.props.id !== prevProps.id)
+        try {
+      let userId = (this.props.id);
+      // const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
+      // const userId = decodeToken.id;
+
+    let result = await axios.get(`http://localhost:8000/users/${userId}`);
+        console.log(userId)
+      console.log(result.data)
+      console.log(result)
+      console.log('bbbbbbbbbbbbbbbbb')
       this.setState({ picture_profil: result.data[0].picture_profil });
       // console.log(result.data[0].picture_profil)
     } catch (err) {
       console.log(err);
-    }
+    // }
   }
+}
   signOut() {
     localStorage.removeItem("myToken");
-
+  
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  token: state.usersReducer.token,
+  id: state.usersReducer.id,
+
+})
+
+export default connect (mapStateToProps)(Header);

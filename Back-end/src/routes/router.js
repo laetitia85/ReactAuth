@@ -47,7 +47,7 @@ app.post("/users/sign-in", (req, res) => {
                 expiresIn: 86400, // expires in 24 hours
               }
             );
-            res.status(200).json({ auth: true, token: token });
+            res.status(200).json({ auth: true, token: token, id: result[0].id });
           } else {
          
             res.status(205).send({

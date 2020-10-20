@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
-const jwt = require("jsonwebtoken");
+import {connect} from 'react-redux'
+
+// const jwt = require("jsonwebtoken");
 
 class Profil extends Component {
   constructor() {
@@ -60,13 +62,16 @@ class Profil extends Component {
 
   async componentDidMount() {
     try {
-      let token = localStorage.getItem("myToken");
-      const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
-      const userId = decodeToken.id;
+      let userId = (this.props.id);
+      console.log('hfiueeyuvhearuvb')
+      console.log(this.props)
+      console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
+      // const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
+      // const userId = decodeToken.id;
 
       let result = await axios.get(`http://localhost:8000/users/${userId}`);
-      console.log(userId)
-      console.log(result.data)
+      // console.log(userId)
+      // console.log(result.data)
       // console.log(result)
       const tabNameProduct = result.data.map(x => x.name)
       // console.log(tabNameProduct)
@@ -86,4 +91,9 @@ class Profil extends Component {
   }
 }
 
-export default Profil;
+const mapStateToProps = (state) => ({
+  id: state.usersReducer.id,
+
+})
+
+export default connect ( mapStateToProps)(Profil);

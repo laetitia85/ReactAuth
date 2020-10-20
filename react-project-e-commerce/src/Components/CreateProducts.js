@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import axios  from 'axios' 
-const jwt = require("jsonwebtoken");
+import {connect} from 'react-redux'
+import {addProducts} from '../store/actions/products'
+// const jwt = require("jsonwebtoken");
 
 class CreateProducts extends Component {
   constructor(){
@@ -70,13 +72,28 @@ class CreateProducts extends Component {
     e.preventDefault();
     console.log('my data' , this.state.name + this.state.category + this.state.price + this.state.description + this.state.picture)
       try {
-        let token = localStorage.getItem("myToken");
-        const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
-        const userId = decodeToken.id;
+        let userId = (this.props.id);
+        console.log(this.props.id)
+        // const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
+        // const userId = decodeToken.id;
 
         let result = await axios.post(`http://localhost:8000/products`, {name:this.state.name, idUser: userId, category:this.state.category, price:this.state.price, description:this.state.description, picture:this.state.picture})
         console.log(result);
           if(result.status === 200){
+
+            let y= {
+              name: this.state.name,
+              category: this.state.category,
+              price: this.state.price,
+              description: this.state.description,
+              picture: this.state.picture,
+            }
+            this.props.addProducts(y)
+
+
+
+
+
         this.setState({
           name: '',
           category:'',
@@ -101,4 +118,15 @@ class CreateProducts extends Component {
   }
 }
 
-export default CreateProducts;
+const mapStateToProps = (state) => ({
+  id: state.usersReducer.id,
+  userProducts: state.productsReducer.userProducts,
+
+})
+
+const mapDispatchToProps = {
+ addProducts,
+
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(CreateProducts);
