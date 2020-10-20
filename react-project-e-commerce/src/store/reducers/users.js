@@ -1,6 +1,5 @@
 const initialStates = {
-    name: "",
-    email: "",
+    email: null,
     id:null,
     token: null,
  
@@ -11,12 +10,20 @@ const usersReducer = (state = initialStates, action) => {
     case "SIGNIN_USER":
       return {
         ...state,
-        name: action.name,
         email: action.email,
         id: action.id,
         token: action.token,
     
-      };
+      }
+      case "SIGNOUT_USER":
+        return{
+          ...state,
+          email: action.email,
+          id: action.id,
+          token: action.token, 
+        }
+    
+    
     // case "ADD_USER_EMAIL":
     //   return {
     //     ...state,

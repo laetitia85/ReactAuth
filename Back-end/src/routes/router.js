@@ -86,7 +86,7 @@ app.post('/products', (req,res) => {
 });
 
 app.get('/users/:id', (req,res) => {
-    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture_profil , products.name, products.id AS products_id FROM users INNER JOIN products ON products.idUser = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
+    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture_profil , products.name, products.id AS products_id,products.price, products.description, products.category, products.picture  FROM users INNER JOIN products ON products.idUser = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
         
         if (err) {
             throw err;

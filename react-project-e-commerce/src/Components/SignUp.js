@@ -76,7 +76,7 @@ class SignUp extends Component {
 
   async tryToSignUp(e) {
     e.preventDefault();
-    console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture_profil)
+    //console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture_profil)
       try {
         let result = await axios.post(`http://localhost:8000/users/sign-up`, {name:this.state.name, email:this.state.email, password:this.state.password,picture_profil:this.state.picture_profil})
       console.log(result);
