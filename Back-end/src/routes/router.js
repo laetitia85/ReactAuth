@@ -87,7 +87,6 @@ app.post("/products", (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 app.get("/users/:id", (req, res) => {
   sql.query(
     `SELECT users.id, users.name AS user_name, users.email, users.password, users.picture_profil , products.name, products.id AS products_id, products.price, products.description, products.category, products.picture  FROM users INNER JOIN products ON products.idUser = users.id WHERE products.idUser = ${req.params.id}`,
@@ -107,13 +106,6 @@ app.get("/users/:id", (req, res) => {
             if (resultat) {
               res.json(resultat);
             }
-=======
-app.get('/users/:id', (req,res) => {
-    sql.query(`SELECT users.id, users.name AS user_name, users.email, users.password, users.picture_profil , products.name, products.id AS products_id,products.price, products.description, products.category, products.picture  FROM users INNER JOIN products ON products.idUser = users.id WHERE products.idUser = ${req.params.id}`, (err, result) => {
-        
-        if (err) {
-            throw err;
->>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
           }
         );
       }
