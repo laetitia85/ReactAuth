@@ -17,14 +17,21 @@ class App extends Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
       
 
         <Router>
         <Header />
-          <Switch>
-            <Route exact={true} path="/user"> {(this.props.token) ? (<Profil/>) :( <Redirect to="/"/>)}</Route>
+=======
+        <Router>
 
-            <Route exact={true} path="/productslist"> {(this.props.token) ? (<ProductsList/>) :( <Redirect to="/"/>)}</Route>
+        <Header />
+
+>>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
+          <Switch>
+            <Route exact={true} path="/user"> {this.props.token ? <Profil/> : <Redirect to="/"/>}</Route>
+
+            <Route exact={true} path="/productslist"> <ProductsList/> </Route>
 
             <Route
               exact={true}

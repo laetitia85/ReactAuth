@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap'
-import axios  from 'axios' 
+import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import {connect} from 'react-redux'
-import {signInUser} from '../store/actions/users'
+import { connect } from 'react-redux'
+import { signInUser } from '../store/actions/users'
 
 
 class SignIn extends Component {
 
-  constructor(){
+  constructor() {
     super();
-    this.state= {
-      email:'',
-      password:'',
+    this.state = {
+      email: '',
+      password: '',
       message: '',
     }
   }

@@ -25,7 +25,11 @@ class Profil extends Component {
     return (
       <div className="container">
 
+<<<<<<< HEAD
         <h1>Edit your profile  {this.state.name}</h1>
+=======
+        <h1>Welcome {this.state.name}</h1>
+>>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
         <hr></hr>
         <span className="ingredient">{this.state.message}<br/></span>
         <Form>
@@ -61,7 +65,11 @@ class Profil extends Component {
           <Button className ="Button" variant="primary" type="submit"onClick={this.tryToUpdate.bind(this)}>Submit</Button>
         </Form>
 
+<<<<<<< HEAD
         <h5>Your Products</h5>
+=======
+        <h5>Infos Produits</h5>
+>>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
         <hr></hr>
           <Form >
             {this.props.userProducts.map(product =>{
@@ -86,7 +94,11 @@ class Profil extends Component {
                 <Button className="Button" variant="primary" type="submit" onClick={this.edit.bind(this)}>Edit</Button>
                 </Col>
                 <Col sm={2} >
+<<<<<<< HEAD
                 <Button className="Button" variant="primary" type="submit" onClick={this.Delete}>Delete</Button>
+=======
+                <Button className="Button" variant="primary" type="submit" onClick={this.Delete}>Del</Button>
+>>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
                 </Col>
               </Row>
               )
@@ -109,8 +121,12 @@ class Profil extends Component {
     e.preventDefault();
     //console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture_profil)
       try {
+<<<<<<< HEAD
         if(this.state) {
         let result = await axios.put(`http://localhost:8000/users/${this.props.id}`, {name:this.state.name, email:this.state.email, password:this.state.password,picture_profil:this.state.picture_profil})
+=======
+        let result = await axios.uptade(`http://localhost:8000/users/${this.props.id}`, {name:this.state.name, email:this.state.email, password:this.state.password,picture_profil:this.state.picture_profil})
+>>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
       console.log(result);
           if(result.status === 200){
         this.setState({
@@ -121,7 +137,10 @@ class Profil extends Component {
           message: 'Your data has been changed',
         }) 
       }
+<<<<<<< HEAD
     }
+=======
+>>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
       } catch (error) {
         console.log(error);
       }
@@ -147,6 +166,7 @@ class Profil extends Component {
       this.setState({
           name: result.data[0].user_name
       })
+<<<<<<< HEAD
       
       for(let i = 0; i<result.data.length ; i++){
         let oneProduct = {
@@ -160,6 +180,21 @@ class Profil extends Component {
         this.props.filluserProducts(oneProduct)
       }
       
+=======
+      
+      for(let i = 0; i<result.data.length ; i++){
+        let oneProduct = {
+          name: result.data[i].name,
+          price:result.data[i].price,
+          category: result.data[i].category,
+          description: result.data[i].description,
+          picture: result.data[i].picture,
+          id:result.data[i].products_id 
+        }
+        this.props.filluserProducts(oneProduct)
+      }
+      
+>>>>>>> 1bd06566151de772e8a9c83db284851865c8fbfd
 
       // this.setState({name: result.data[0].user_name, email: result.data[0].email, password:result.data[0].password, picture_profil: result.data[0].picture_profil,  product_name: tabNameProduct, products_id: tabIdProduct });
 
