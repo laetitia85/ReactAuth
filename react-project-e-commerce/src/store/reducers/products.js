@@ -1,26 +1,30 @@
 const initialStates = {
-    name: '',
-    category: '',
-    price: '',
-    description: '',
-    picture: '',
+    
     userProducts: [],
  
 };
 
 const productsReducer = (state = initialStates, action) => {
   switch (action.type) {
-    case "ADD_PRODUCT":
-      return {
+    case 'FETCH_PRODUTS':
+      return{
         ...state,
-        name: action.name,
-        category: action.category,
-        price: action.price,
-        description: action.description,
-        picture: action.picture,
-        userProducts: state.userProduts.push(action.productList),
-  
-      };
+        userProducts : [...state.userProducts, action.productListe] // push tous les data dans le state
+      }
+
+    case 'ADD_PRODUCT':
+      return {
+          ...state,
+          userProducts: [...state.userProducts, action.newProduct] // =  autre façon de faire push
+      }
+  case 'MODIFY_PRODUCT':
+      return {
+          ...state,
+          userProducts: {
+              [action.newProduct.index]: {...action.newProduct} //pour trouver l'element dans le tableau et le changer totalement
+          }
+
+      }
     // case "ADD_USER_EMAIL":
     //   return {
     //     ...state,

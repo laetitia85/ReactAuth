@@ -24,7 +24,7 @@ class SignUp extends Component {
           <Row>
             <Col sm={6}>
             <Form.Label className="float-left">Name</Form.Label>
-              <Form.Control value={this.state.name} onChange={this.setChange.bind(this)} name="name" placeholder="Enter your name" />
+              <Form.Control type="text" value={this.state.name} onChange={this.setChange.bind(this)} name="name" placeholder="Enter your name" />
             </Col>
             <Col sm={6}>
             <Form.Label className="float-left">Email address</Form.Label>
@@ -56,15 +56,15 @@ class SignUp extends Component {
       </div>
     );
   }
-  componentDidMount() {
-    this.setState({
-      name: this.props.name,
-      email: this.props.email,
-      password: this.props.password,
-      picture_profil: this.props.picture_profil,
-    });
-    console.log(this);
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     name: this.props.name,
+  //     email: this.props.email,
+  //     password: this.props.password,
+  //     picture_profil: this.props.picture_profil,
+  //   });
+  //   console.log(this);
+  // }
   setChange(event){
     let myinput = event.target
     let inputname = myinput.name
@@ -76,7 +76,7 @@ class SignUp extends Component {
 
   async tryToSignUp(e) {
     e.preventDefault();
-    console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture_profil)
+    //console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture_profil)
       try {
         let result = await axios.post(`http://localhost:8000/users/sign-up`, {name:this.state.name, email:this.state.email, password:this.state.password,picture_profil:this.state.picture_profil})
       console.log(result);

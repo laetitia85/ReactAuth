@@ -1,9 +1,14 @@
-export const signInUser = (User) => ({
+export const signInUser = (user) => ({
     type: "SIGNIN_USER",
-    name: User.name,
-    email: User.email,
-    id: User.id,
-    token: User.token,
+    email: user.email,
+    id: user.id,
+    token: user.token,
    
+})
+export const signOutUser = () => ({
+    type: "SIGNOUT_USER",
+    email: null,
+    id:null,
+    token:null
 })
 

@@ -89,12 +89,7 @@ class CreateProducts extends Component {
               picture: this.state.picture,
             }
             this.props.addProducts(y)
-
-
-
-
-
-        this.setState({
+          this.setState({
           name: '',
           category:'',
           price:'',
@@ -120,7 +115,12 @@ class CreateProducts extends Component {
 
 const mapStateToProps = (state) => ({
   id: state.usersReducer.id,
-  userProducts: state.productsReducer.userProducts,
+  name: state.productsReducer.name,
+  category: state.productsReducer.category,
+  price: state.productsReducer.price,
+  description: state.productsReducer.description,
+  picture: state.productsReducer.picture,
+  // newProducts: state.productsReducer.newProducts,
 
 })
 

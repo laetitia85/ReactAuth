@@ -17,9 +17,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header />
+      
 
         <Router>
+        <Header />
           <Switch>
             <Route exact={true} path="/user"> {(this.props.token) ? (<Profil/>) :( <Redirect to="/"/>)}</Route>
 
