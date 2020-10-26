@@ -2,16 +2,17 @@ import { Link } from "react-router-dom";
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { Button, Form } from "react-bootstrap";
+import { Button} from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 import { signOutUser } from "../store/actions/users";
-import {  signOutProduct } from "../store/actions/products";
+import { signOutProduct } from "../store/actions/products";
 
 class Header extends Component {
   constructor() {
     super();
     this.state = {
+      // categoryTab: [],
       picture_profil: null,
     };
   }
@@ -19,7 +20,6 @@ class Header extends Component {
     if (this.props.token) {
       return (
         <div>
-              
           <Navbar bg="dark" variant="dark">
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/user">
@@ -34,6 +34,7 @@ class Header extends Component {
                 Add Product
               </Nav.Link>
             </Nav>
+
             <Nav>
               <Nav.Link as={Link} to="/user">
                 <img
@@ -43,17 +44,6 @@ class Header extends Component {
                   src={this.state.picture_profil}
                 />
               </Nav.Link>
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Control
-                  size="sm"
-                  as="select">
-                  <option valeur="category">Please choose a category</option>
-                  <option valeur=""></option>
-                  <option valeur=""></option>
-                  <option valeur=""></option>
-                  <option valeur=""></option>
-                </Form.Control>
-              </Form.Group>
 
               <Nav.Link as={Link} to="/">
                 <Button
@@ -70,9 +60,7 @@ class Header extends Component {
       );
     } else if (this.props.token == null) {
       return (
-  
         <div>
-            
           <Navbar bg="dark" variant="dark">
             <Nav>
               <Nav.Link as={Link} to="/">
@@ -89,13 +77,17 @@ class Header extends Component {
             </Nav>
           </Navbar>
         </div>
-      
       );
     }
   }
 
-  async componentDidUpdate(prevProps) {
+  // async componentDidMount() {
+  //   let result = await axios.get("http://localhost:8000/category");
+  //   console.log(result);
+  //   this.setState({ categoryTab: result.data });
+  // }
 
+  async componentDidUpdate(prevProps) {
     if (this.props.id !== prevProps.id) {
       try {
         let result = await axios.get(
@@ -109,7 +101,7 @@ class Header extends Component {
   }
   signOut() {
     this.props.signOutUser();
-    this.props.signOutProduct()
+    this.props.signOutProduct();
   }
 }
 

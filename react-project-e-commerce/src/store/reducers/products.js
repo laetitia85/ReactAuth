@@ -23,13 +23,30 @@ const productsReducer = (state = initialStates, action) => {
           userProducts: {
               [action.newProduct.index]: {...action.newProduct} //pour trouver l'element dans le tableau et le changer totalement
           }
-    }
+      }
 
   case 'SIGN_OUT_PRODUCT' : 
       return {
         ...state,
         userProducts : []
       }
+
+  case 'DELETE_PRODUCT' :
+    let elemToDelete  = state.userProducts.filter(elem => elem.id === parseInt(action.payload))
+    console.log(elemToDelete)
+    let index = state.userProducts.indexOf(elemToDelete[0])
+
+  return {
+    ...state,
+    userProducts: [
+      ...state.userProducts.slice(0, index),                 // slice (o == index 0, index == index de mon élément)
+      ...state.userProducts.slice(
+        index + 1,
+        state.userProducts.length
+      ),                                                     // slice (index+1 == index au-dessus de celui que l'on à supprimer jusqu'à la fin du tableau)
+    ],
+
+  }
     // case "ADD_USER_EMAIL":
     //   return {
     //     ...state,

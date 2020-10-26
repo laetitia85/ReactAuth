@@ -108,3 +108,7 @@ h1 {
 .productList img{
   cursor: pointer;
 }
+
+.select{
+  margin-right: 20%;
+}

@@ -20,3 +20,8 @@ export const signOutProduct = () => ({
     type: "SIGN_OUT_PRODUCT"
 })
 
+export const deleteProduct = (id) => ({
+    type: "DELETE_PRODUCT",
+    payload : id
+})
+

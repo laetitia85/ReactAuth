@@ -199,38 +199,25 @@ app.put("/users/:id", (req, res) => {
 });
 
 
-      
-
 app.put("/products/:id", (req, res) => {
   try {
-    if (req.body.name) {
-      sql.query(
-        `UPDATE products SET name = '${req.body.name}' WHERE id = '${req.params.id}'`
-      );
-      res.status(200).send("update it's ok");
-    } else if (req.body.picture) {
-      sql.query(
-        `UPDATE products SET picture = '${req.body.picture}' WHERE id = '${req.params.id}'`
-      );
-      res.status(200).send("update it's ok");
-    } else if (req.body.description) {
-      sql.query(
-        `UPDATE products SET description = '${req.body.description}' WHERE id = '${req.params.id}'`
-      );
-      res.status(200).send("update it's ok");
-    } else if (req.body.category) {
-      sql.query(
-        `UPDATE products SET category = '${req.body.category}' WHERE id = '${req.params.id}'`
-      );
-      res.status(200).send("update it's ok");
-    } else if (req.body.price) {
-      sql.query(
-        `UPDATE products SET price = '${req.body.price}' WHERE id = '${req.params.id}'`
-      );
-      res.status(200).send("update it's ok");
-    } else {
-      res.status(205).send("error");
-    }
+      let x = Object.keys(req.body)
+      console.log('x', x);
+      var myQuery = `UPDATE products SET `
+      for (let i = 0; i < x.length; i++) {
+        if(i == x.length -1){   
+            myQuery = myQuery + `${x[i]}` + ' = ' + `'${req.body[x[i]]}'` // req.body.name === req.body[name]
+      }else{
+        myQuery = myQuery + `${x[i]}` + ' = ' + `'${req.body[x[i]]}'` + ', '
+    
+      }
+        }
+      myQuery = myQuery + ` WHERE id = ${req.params.id}`;
+      console.log(myQuery);
+       sql.query(myQuery, function (err, result) {
+        if (err) throw err;
+        res.send("it is ok ");
+      });
   } catch (err) {
     console.log(err);
   }

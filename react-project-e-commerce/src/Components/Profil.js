@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Button, Row, Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import { modifyProduct } from "../store/actions/products";
-import { filluserProducts } from "../store/actions/products";
+import { modifyProduct, filluserProducts, deleteProduct} from "../store/actions/products";
 import EditProducts from "../Components/EditProducts"
 
 class Profil extends Component {
@@ -16,7 +15,8 @@ class Profil extends Component {
       picture_profil: "",
       product_name: [],
       products_id: [],
-      flag : false
+      flag : false,
+      msg: '',
     };
   }
   render() {
@@ -117,10 +117,10 @@ class Profil extends Component {
             </Col>
           </Row>
         </Form>
-
+        <p>{this.state.msg}</p>
         <h5>Your Products</h5>
         <hr></hr>
-        <Form>
+        <div>
           {this.props.userProducts.map((product) => {
             return (
               <Row key={product.id}>
@@ -132,20 +132,20 @@ class Profil extends Component {
                 </Col>
                 <Col sm={1}>{product.price}</Col>
                 <Col sm={1}>
-                  <Button  id={product.id}
+                  <Button 
                     className="Button"
                     variant="primary"
                     type="submit"
-                    onClick={this.edit.bind(this)}>
+                    onClick={this.edit.bind(this, product.id)}>
                     Edit
                   </Button>
                 </Col>
                 <Col sm={2}>
-                  <Button id={product.id}
+                  <Button 
                     className="Button"
                     variant="primary"
                     type="submit"
-                    onClick={this.deleteProduct.bind(this)}
+                    onClick={this.deleteProduct.bind(this, product.id)}
                   >
                     Delete
                   </Button>
@@ -154,7 +154,7 @@ class Profil extends Component {
           )
         })
       }
-        </Form>
+        </div>
       </div>
     )} else if (this.state.flag) {
      return (
@@ -200,15 +200,19 @@ class Profil extends Component {
       console.log(error);
     }
   }
-  edit (e) {
-    e.preventDefault()
-    console.log(e.target.id)
-    this.setState({ products_id : e.target.id , flag : true}) // n'oublie pas d'ajouter un objet dedans
+  edit (productId) {
+    this.setState({ products_id : productId , flag : true}) // n'oublie pas d'ajouter un objet dedans
     };
 
-  deleteProduct = () => {
+  async deleteProduct (productId) {
     try {
-
+    let result = await axios.delete(`http://localhost:8000/products/${productId}`)
+    if (result.status === 200) {
+      this.setState({msg : 'Your product have been delete'})
+      this.props.deleteProduct(productId)
+    }
+      
+    
     } catch (error) {
       console.log(error);
     }
@@ -248,6 +252,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   modifyProduct,
   filluserProducts,
+  deleteProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profil);
