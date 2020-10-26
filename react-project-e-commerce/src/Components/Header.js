@@ -6,8 +6,7 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 import { signOutUser } from "../store/actions/users";
-
-// const jwt = require("jsonwebtoken");
+import {  signOutProduct } from "../store/actions/products";
 
 class Header extends Component {
   constructor() {
@@ -47,15 +46,12 @@ class Header extends Component {
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Control
                   size="sm"
-                  as="select"
-
-                  // placeholder="Please choose a category"
-                >
+                  as="select">
                   <option valeur="category">Please choose a category</option>
-                  <option valeur="bijoux">Bijoux</option>
-                  <option valeur="accessoires">Accessoires</option>
-                  <option valeur="vetements">Vetements</option>
-                  <option valeur="chaussures">Chaussures</option>
+                  <option valeur=""></option>
+                  <option valeur=""></option>
+                  <option valeur=""></option>
+                  <option valeur=""></option>
                 </Form.Control>
               </Form.Group>
 
@@ -98,29 +94,22 @@ class Header extends Component {
     }
   }
 
-  // async componentDidMount() {
-
   async componentDidUpdate(prevProps) {
-    // if(this.props.token) {
 
     if (this.props.id !== prevProps.id) {
       try {
-        // let userId = (this.props.id);
-        // const decodeToken = jwt.verify(token, "x_TOKEN_SECRET");
-        // const userId = decodeToken.id;
-
         let result = await axios.get(
           `http://localhost:8000/users/${this.props.id}`
         );
         this.setState({ picture_profil: result.data[0].picture_profil });
       } catch (err) {
         console.log(err);
-        // }
       }
     }
   }
   signOut() {
     this.props.signOutUser();
+    this.props.signOutProduct()
   }
 }
 
@@ -130,6 +119,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   signOutUser,
+  signOutProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -23,7 +23,12 @@ const productsReducer = (state = initialStates, action) => {
           userProducts: {
               [action.newProduct.index]: {...action.newProduct} //pour trouver l'element dans le tableau et le changer totalement
           }
+    }
 
+  case 'SIGN_OUT_PRODUCT' : 
+      return {
+        ...state,
+        userProducts : []
       }
     // case "ADD_USER_EMAIL":
     //   return {

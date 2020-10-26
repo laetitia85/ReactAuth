@@ -4,7 +4,6 @@ const sql = require("../database/database.js");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-// const isTokenIsValid = require('../middlewares/auth');
 
 app.get("/users", (req, res) => {
   sql.query("SELECT id, name FROM users", (err, response) => {
@@ -125,9 +124,18 @@ app.get("/products/:id", (req, res) => {
   );
 });
 
+app.get("/category", (req, res) => {
+  sql.query("SELECT category FROM products", (err, response) => {
+    if (err) {
+      throw err;
+    }
+    res.send(response);
+  });
+});
+
 // app.get("/products/:category", (req, res) => {
 //   try {
-//     sql.query(`SELECT name, price FROM products WHERE products.category = ${req.params.category}`, (err, result) => {
+//     sql.query(`SELECT name, price FROM products WHERE products.category = '${req.params.category}'`, (err, result) => {
 //       if (err) {
 //         throw err;
 //       }
@@ -137,18 +145,6 @@ app.get("/products/:id", (req, res) => {
 //     console.log(err);
 //   }
 // });
-
-app.get("/category", (req, res) => {
-  sql.query(
-    "SELECT category FROM products",
-    (err, response) => {
-      if (err) {
-        throw err;
-      }
-      res.send(response);
-    }
-  );
-});
 
 app.get("/category/:select", (req, res) => {
   sql.query(
@@ -161,8 +157,6 @@ app.get("/category/:select", (req, res) => {
     }
   );
 });
-
-
 
 app.put("/users/:id", (req, res) => {
   try {
@@ -203,6 +197,9 @@ app.put("/users/:id", (req, res) => {
     console.log(err);
   }
 });
+
+
+      
 
 app.put("/products/:id", (req, res) => {
   try {

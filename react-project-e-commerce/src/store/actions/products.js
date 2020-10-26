@@ -15,3 +15,8 @@ export const modifyProduct = (product) => ({
     type: "MODIFY_PRODUCT",
     newProduct : product
 })
+
+export const signOutProduct = () => ({
+    type: "SIGN_OUT_PRODUCT"
+})
+
