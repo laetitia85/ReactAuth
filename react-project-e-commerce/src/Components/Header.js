@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Button} from "react-bootstrap";
-import axios from "axios";
 import { connect } from "react-redux";
 import { signOutUser } from "../store/actions/users";
 import { signOutProduct } from "../store/actions/products";
@@ -12,7 +11,6 @@ class Header extends Component {
   constructor() {
     super();
     this.state = {
-      // categoryTab: [],
       picture_profil: null,
     };
   }
@@ -33,6 +31,10 @@ class Header extends Component {
               <Nav.Link as={Link} to="/createproducts">
                 Add Product
               </Nav.Link>
+
+              <Nav.Link as={Link} to="/myorders">
+               My Orders
+              </Nav.Link>
             </Nav>
 
             <Nav>
@@ -41,7 +43,7 @@ class Header extends Component {
                   height="40px"
                   width="40px"
                   alt=""
-                  src={this.state.picture_profil}
+                  src={this.props.picture_profil}
                 />
               </Nav.Link>
 
@@ -81,24 +83,6 @@ class Header extends Component {
     }
   }
 
-  // async componentDidMount() {
-  //   let result = await axios.get("http://localhost:8000/category");
-  //   console.log(result);
-  //   this.setState({ categoryTab: result.data });
-  // }
-
-  async componentDidUpdate(prevProps) {
-    if (this.props.id !== prevProps.id) {
-      try {
-        let result = await axios.get(
-          `http://localhost:8000/users/${this.props.id}`
-        );
-        this.setState({ picture_profil: result.data[0].picture_profil });
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  }
   signOut() {
     this.props.signOutUser();
     this.props.signOutProduct();
@@ -108,7 +92,9 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   token: state.usersReducer.token,
   id: state.usersReducer.id,
+  picture_profil: state.usersReducer.picture_profil,
 });
+
 const mapDispatchToProps = {
   signOutUser,
   signOutProduct,

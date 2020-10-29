@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import { Button, Row, Col, Form } from "react-bootstrap";
+import { connect } from 'react-redux';
+import { modifyProduct } from "../store/actions/products";
 
 class EditProducts extends Component {
     constructor(){
@@ -78,10 +80,12 @@ async tryToEdit(e) {
         }
       if (x) {
         let result = await axios.put(
-          `http://localhost:8000/products/${this.props.id}`, x
+          `http://localhost:8000/products/${this.props.match.params.id}`, x
         );
         console.log(result);
         if (result.status === 200) {
+          console.log('aaaaa')
+          this.props.modifyProduct(x, this.props.match.params.id)
           this.setState({
             name: "",
             category: "",
@@ -98,4 +102,9 @@ async tryToEdit(e) {
 
 
 }
-export default EditProducts;
+
+const mapDispatchToProps = {
+  modifyProduct,
+}
+
+export default connect(null, mapDispatchToProps) (EditProducts);

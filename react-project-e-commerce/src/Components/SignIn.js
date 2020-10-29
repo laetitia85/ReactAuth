@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { filluserProducts } from "../store/actions/products";
 import { signInUser } from '../store/actions/users'
 
 
@@ -14,6 +15,7 @@ class SignIn extends Component {
       email: '',
       password: '',
       message: '',
+      picture_profil: '',
     }
   }
   render() {
@@ -60,15 +62,18 @@ class SignIn extends Component {
       let result = await axios.post(`http://localhost:8000/users/sign-in`, { email: this.state.email, password: this.state.password })
       console.log(result);
       if (result.status === 200) {
+        let userData = await axios.get(`http://localhost:8000/users/${result.data.id}`)
         // console.log('Sign is good', result.data.token);
         // localStorage.setItem('myToken', result.data.token);
         let x = {
-          name: this.state.name,
+          name: userData.data[0].user_name,
+          picture_profil: userData.data[0].picture_profil,
           email: this.state.email,
           id: result.data.id,
           token: result.data.token,
         }
-        this.props.signInUser(x)
+        this.props.signInUser(x)                                                    //save the data of this user in the store
+        userData.data.map(x => this.props.filluserProducts(x))                      //save the products of this user in the store
         this.setState({
           email: '',
           password: '',
@@ -105,7 +110,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   signInUser,
-
+  filluserProducts,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

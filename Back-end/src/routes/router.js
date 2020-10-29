@@ -76,11 +76,18 @@ app.get("/products", (req, res) => {
 
 app.post("/products", (req, res) => {
   try {
-    sql.query(
-      `INSERT INTO products (name,idUser,price,category,description,picture) VALUES ('${req.body.name}','${req.body.idUser}','${req.body.price}','${req.body.category}','${req.body.description}','${req.body.picture}')`
+    let resul = sql.query(
+      `INSERT INTO products (name,idUser,price,category,description,picture) VALUES ('${req.body.name}','${req.body.idUser}','${req.body.price}','${req.body.category}','${req.body.description}','${req.body.picture}')`,
+      (error, result) => {
+        console.log(resul);
+        res
+          .status(200)
+          .json({
+            msg: "the product is been enregistered",
+            id: result.insertId,
+          });
+      }
     );
-
-    res.send("the product is been enregistered");
   } catch (err) {
     console.log(err);
   }
@@ -198,26 +205,24 @@ app.put("/users/:id", (req, res) => {
   }
 });
 
-
 app.put("/products/:id", (req, res) => {
   try {
-      let x = Object.keys(req.body)
-      console.log('x', x);
-      var myQuery = `UPDATE products SET `
-      for (let i = 0; i < x.length; i++) {
-        if(i == x.length -1){   
-            myQuery = myQuery + `${x[i]}` + ' = ' + `'${req.body[x[i]]}'` // req.body.name === req.body[name]
-      }else{
-        myQuery = myQuery + `${x[i]}` + ' = ' + `'${req.body[x[i]]}'` + ', '
-    
+    let x = Object.keys(req.body);
+    console.log("x", x);
+    var myQuery = `UPDATE products SET `;
+    for (let i = 0; i < x.length; i++) {
+      if (i == x.length - 1) {
+        myQuery = myQuery + `${x[i]}` + " = " + `'${req.body[x[i]]}'`; // req.body.name === req.body[name]
+      } else {
+        myQuery = myQuery + `${x[i]}` + " = " + `'${req.body[x[i]]}'` + ", ";
       }
-        }
-      myQuery = myQuery + ` WHERE id = ${req.params.id}`;
-      console.log(myQuery);
-       sql.query(myQuery, function (err, result) {
-        if (err) throw err;
-        res.send("it is ok ");
-      });
+    }
+    myQuery = myQuery + ` WHERE id = ${req.params.id}`;
+    console.log(myQuery);
+    sql.query(myQuery, function (err, result) {
+      if (err) throw err;
+      res.status(200).send("it is ok ");
+    });
   } catch (err) {
     console.log(err);
   }

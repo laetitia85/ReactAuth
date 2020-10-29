@@ -3,7 +3,6 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import axios  from 'axios' 
 import {connect} from 'react-redux'
 import {addProducts} from '../store/actions/products'
-// const jwt = require("jsonwebtoken");
 
 class CreateProducts extends Component {
   constructor(){
@@ -82,6 +81,7 @@ class CreateProducts extends Component {
           if(result.status === 200){
 
             let y= {
+              id: result.data.id,
               name: this.state.name,
               category: this.state.category,
               price: this.state.price,

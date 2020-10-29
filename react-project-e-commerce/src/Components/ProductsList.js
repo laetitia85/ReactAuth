@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios  from 'axios'
 import Product from './Product'
-// import  { Link } from 'react-router-dom'
 
 
 class ProductsList extends Component {
@@ -15,15 +14,17 @@ class ProductsList extends Component {
           categoryTab: [],
         }
       }
+  
     render() {
          if ( this.state.items !== null && this.state.redirect === false) {
             return (
                 <div>
                 <select className="select" onChange={this.selectCategory.bind(this)}>
                 <option value= "">Choose your category</option>
-                {this.state.categoryTab.map((elem) => {
-                  return <option  value={elem.category}>{elem.category}</option>;
-                })}
+                {this.state.categoryTab.length !== 0 ? this.state.categoryTab.map((elem) => {
+                  return <option  value={elem.category}>{elem.category}</option>
+                })
+                : <option>Are not category</option>}
               </select>
                 <div className="container list">
                     {this.state.items.map(item => (
@@ -62,18 +63,22 @@ class ProductsList extends Component {
            items: result.data
             
         }) 
-          
-          let resultat = await axios.get("http://localhost:8000/category");
-        //   console.log(resultat);
-          this.setState({ categoryTab: resultat.data 
-        
-        });
 
+          let resultat = await axios.get("http://localhost:8000/category");
+          // console.log(resultat.data);
+          function keepUnique(array, key){
+            return[
+                ...new Map( array.map(x => [key(x), x]) ).values()
+            ]
+        }
+        console.log(keepUnique(resultat.data, elem => elem.category));
+       this.setState({ categoryTab: keepUnique(resultat.data, elem => elem.category)});
+        
         } catch (error) {
           console.log(error);
         }
         
-    }
+      }
 
     async selectCategory(e) {
         if(e.target.value === '') {

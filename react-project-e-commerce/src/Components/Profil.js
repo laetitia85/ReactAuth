@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Button, Row, Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import { modifyProduct, filluserProducts, deleteProduct} from "../store/actions/products";
-import EditProducts from "../Components/EditProducts"
+import { deleteProduct} from "../store/actions/products";
+import { changeUserData } from "../store/actions/users";
+// import EditProducts from "../Components/EditProducts"
+import { Redirect } from 'react-router-dom'
+
 
 class Profil extends Component {
   constructor() {
@@ -23,7 +26,7 @@ class Profil extends Component {
     if(this.state.flag === false) {
     return (
       <div className="container">
-        <h1>Edit your profile {this.state.name}</h1>
+        <h1>Edit your profile {this.props.name}</h1>
         <hr></hr>
         <span className="ingredient">
           {this.state.message}
@@ -123,7 +126,7 @@ class Profil extends Component {
         <div>
           {this.props.userProducts.map((product) => {
             return (
-              <Row key={product.id}>
+              <Row key={product.products_id}>
                 <Col sm={1}>{product.name}</Col>
                 <Col sm={3}>{product.description}</Col>
                 <Col sm={2}>{product.category}</Col>
@@ -136,7 +139,7 @@ class Profil extends Component {
                     className="Button"
                     variant="primary"
                     type="submit"
-                    onClick={this.edit.bind(this, product.id)}>
+                    onClick={this.edit.bind(this, product.products_id)}>
                     Edit
                   </Button>
                 </Col>
@@ -145,7 +148,7 @@ class Profil extends Component {
                     className="Button"
                     variant="primary"
                     type="submit"
-                    onClick={this.deleteProduct.bind(this, product.id)}
+                    onClick={this.deleteProduct.bind(this, product.products_id)}
                   >
                     Delete
                   </Button>
@@ -158,7 +161,10 @@ class Profil extends Component {
       </div>
     )} else if (this.state.flag) {
      return (
-       <EditProducts id = {this.state.products_id} />
+        //  <EditProducts id = {this.state.products_id} />
+      <Redirect to={`/editproducts/${this.state.products_id}`} />
+
+     
      
      )
     }
@@ -175,18 +181,18 @@ class Profil extends Component {
     e.preventDefault();
     //console.log('my data' , this.state.name + this.state.email + this.state.password + this.state.picture_profil)
     try {
-      if (this.state) {
+      let userData = {name:this.state.name, email: this.state.email, password:this.state.password, picture_profil:this.state.picture_profil}
+      for (let key in userData) {
+        if(userData[key] === '') {
+          delete userData[key]
+        }
+      }
+      if (userData) {
         let result = await axios.put(
-          `http://localhost:8000/users/${this.props.id}`,
-          {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password,
-            picture_profil: this.state.picture_profil,
-          }
-        );
+          `http://localhost:8000/users/${this.props.id}`, userData )
         console.log(result);
         if (result.status === 200) {
+          this.props.changeUserData(userData)
           this.setState({
             name: "",
             email: "",
@@ -218,41 +224,41 @@ class Profil extends Component {
     }
   };
 
-  async componentDidMount() {
-    try {
-      let result = await axios.get(
-        `http://localhost:8000/users/${this.props.id}`
-      );
-      this.setState({
-        name: result.data[0].user_name,
-      });
+  // async componentDidMount() {
+  //   try {
+  //     let result = await axios.get(
+  //       `http://localhost:8000/users/${this.props.id}`
+  //     );
+  //     this.setState({
+  //       name: result.data[0].user_name,
+  //     });
 
-      for (let i = 0; i < result.data.length; i++) {
-        let oneProduct = {
-          name: result.data[i].name,
-          price: result.data[i].price,
-          category: result.data[i].category,
-          description: result.data[i].description,
-          picture: result.data[i].picture,
-          id: result.data[i].products_id,
-        };
-        this.props.filluserProducts(oneProduct);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //     for (let i = 0; i < result.data.length; i++) {
+  //       let oneProduct = {
+  //         name: result.data[i].name,
+  //         price: result.data[i].price,
+  //         category: result.data[i].category,
+  //         description: result.data[i].description,
+  //         picture: result.data[i].picture,
+  //         id: result.data[i].products_id,
+  //       };
+  //       this.props.filluserProducts(oneProduct);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 }
 
 const mapStateToProps = (state) => ({
   userProducts: state.productsReducer.userProducts,
   id: state.usersReducer.id,
+  name: state.usersReducer.name,
   email: state.usersReducer.email,
 });
 const mapDispatchToProps = {
-  modifyProduct,
-  filluserProducts,
   deleteProduct,
+  changeUserData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profil);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios  from 'axios' 
 import { Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import {  addToCart } from "../store/actions/products";
 
 class Product extends Component {
     constructor() {
@@ -13,6 +15,8 @@ class Product extends Component {
             price: '',
             description: '',
             category: '',
+            quantity : 0,
+            priceOfQuantity : 0,
         }
     }
     render() {
@@ -30,7 +34,7 @@ class Product extends Component {
                             <p><b>description:</b><br></br>{this.state.description || 'There is no description'}</p>
                         </div>
                     </div>
-                    <Button className ="Buttons" variant="primary" type="submit" >Add to Basket</Button>
+                    <Button className ="Buttons" variant="primary" type="submit" onClick={this.add.bind(this)}>Add to Basket</Button>
                 </div>
             )
         } else {
@@ -41,6 +45,12 @@ class Product extends Component {
             )
         }
     }
+
+    add(e){
+        e.preventDefault();
+        this.props.addToCart(this.state)
+    }
+
     async componentDidMount() {
         // console.log('in the product component');
         // console.log(this.props.productID);
@@ -62,7 +72,12 @@ class Product extends Component {
         }
 
     }
+}
+
+    const mapDispatchToProps = {
+        addToCart
+      };
 
      
-}
-export default Product;
+
+export default connect(null, mapDispatchToProps)(Product);
