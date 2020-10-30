@@ -34,7 +34,7 @@ class Product extends Component {
                             <p><b>description:</b><br></br>{this.state.description || 'There is no description'}</p>
                         </div>
                     </div>
-                    <Button className ="Buttons" variant="primary" type="submit" onClick={this.add.bind(this)}>Add to Basket</Button>
+                    <Button className ="Buttons" variant="primary" type="submit" onClick={this.add.bind(this)}>Add to Cart</Button>
                 </div>
             )
         } else {

@@ -30,3 +30,6 @@ export const decQuantity = (productID) => ({
   type: "DEC_QUANTITY",
   payload: productID,
 });
+export const deleteProductUser = () => ({
+  type: "DELETE_PRODUCT_USER"
+})

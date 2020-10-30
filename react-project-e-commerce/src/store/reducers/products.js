@@ -47,7 +47,7 @@ const productsReducer = (state = initialStates, action) => {
       }
 
   case 'DELETE_PRODUCT' :
-    let elemToDelete  = state.userProducts.filter(elem => elem.id === parseInt(action.payload))
+    let elemToDelete  = state.userProducts.filter(elem => elem.products_id === parseInt(action.payload))
     console.log(elemToDelete)
     let index = state.userProducts.indexOf(elemToDelete[0])
 
@@ -128,21 +128,13 @@ const productsReducer = (state = initialStates, action) => {
         ...state.carteProducts.slice(myIndex + 1, state.carteProducts.length),
       ],
     }
-    // case "ADD_USER_EMAIL":
-    //   return {
-    //     ...state,
-    //     email: action.email,
-    //   };
-    //   case "ADD_USER_PASSWORD":
-    //     return {
-    //       ...state,
-    //       password: action.password,
-    //     };
-    //     case "PICTURE_PROFIL":
-    //       return {
-    //         ...state,
-    //         picture_profil: action.picture_profil,
-    //       };
+
+    case "DELETE_PRODUCT_USER":
+      return {
+        userProducts: [],
+        carteProducts: [],
+      }
+  
     default:
       return state
     

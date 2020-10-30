@@ -20,7 +20,7 @@ class ProductsList extends Component {
             return (
                 <div>
                 <select className="select" onChange={this.selectCategory.bind(this)}>
-                <option value= "">Choose your category</option>
+                <option value= "">All</option>
                 {this.state.categoryTab.length !== 0 ? this.state.categoryTab.map((elem) => {
                   return <option  value={elem.category}>{elem.category}</option>
                 })

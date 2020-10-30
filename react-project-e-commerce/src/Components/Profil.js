@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Button, Row, Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import { deleteProduct} from "../store/actions/products";
-import { changeUserData } from "../store/actions/users";
-// import EditProducts from "../Components/EditProducts"
+import { deleteProduct, deleteProductUser} from "../store/actions/products";
+import { changeUserData,  deleteUserId } from "../store/actions/users";
 import { Redirect } from 'react-router-dom'
 
 
@@ -119,19 +118,32 @@ class Profil extends Component {
           </Button>
             </Col>
           </Row>
+          <Row>
+          <Col sm={8}>
+          <Button
+            className="Button"
+            variant="danger"
+            type="submit"
+            onClick={this.deleteUser.bind(this)}>
+         Delete accompt
+         </Button>
+         </Col>
+          </Row>
         </Form>
         <p>{this.state.msg}</p>
         <h5>Your Products</h5>
+
         <hr></hr>
         <div>
-          {this.props.userProducts.map((product) => {
+          {this.props.userProducts.length === 0 ? <p>You don't have products</p> : 
+          this.props.userProducts.map((product) => {
             return (
               <Row key={product.products_id}>
                 <Col sm={1}>{product.name}</Col>
                 <Col sm={3}>{product.description}</Col>
                 <Col sm={2}>{product.category}</Col>
                 <Col sm={2}>
-                  <img src={product.picture} alt="" height="30" width="30" />
+                  <img src={product.picture} alt="" height="50" width="50" />
                 </Col>
                 <Col sm={1}>{product.price}</Col>
                 <Col sm={1}>
@@ -146,7 +158,7 @@ class Profil extends Component {
                 <Col sm={2}>
                   <Button 
                     className="Button"
-                    variant="primary"
+                    variant="danger"
                     type="submit"
                     onClick={this.deleteProduct.bind(this, product.products_id)}
                   >
@@ -224,6 +236,20 @@ class Profil extends Component {
     }
   };
 
+  async deleteUser () {
+    try {
+    let result = await axios.delete(`http://localhost:8000/users/${this.props.id}`)
+    if (result.status === 200) {
+      this.setState({msg : 'Your data have been delete'})
+      this.props.deleteUserId()
+      this.props.deleteProductUser()
+    }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // async componentDidMount() {
   //   try {
   //     let result = await axios.get(
@@ -258,7 +284,9 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   deleteProduct,
-  changeUserData
+  changeUserData,
+  deleteUserId,
+  deleteProductUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profil);

@@ -21,3 +21,7 @@ export const changeUserData = (data) => ({
     payload: data,
 })
 
+export const  deleteUserId = () => ({
+    type: "DELETE_USER_ID",
+})
+

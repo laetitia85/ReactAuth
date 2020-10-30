@@ -34,6 +34,15 @@ const usersReducer = (state = initialStates, action) => {
       return {
         ...state,
       };
+      case "DELETE_USER_ID":
+        return {
+          name: null,
+          email: null,
+          id: null,
+          token: null,
+          picture_profil: null,
+        }
+     
 
     // case "ADD_USER_EMAIL":
     //   return {

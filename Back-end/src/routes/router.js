@@ -228,16 +228,19 @@ app.put("/products/:id", (req, res) => {
   }
 });
 
-app.delete("/users/:userID", (req, res) => {
-  sql.query(`DELETE FROM users WHERE id ='${req.params.userID}'`, function (
-    err,
-    result
-  ) {
-    if (err) throw res.status(400).send("there is an error");
+app.delete('/users/:userID', (req, res) => {
+  sql.query(`DELETE FROM users WHERE id ='${req.params.userID}'`, function (err, result) {
+    if (err) throw res.status(400).send('there is an error');
+    sql.query(`DELETE FROM products WHERE idUser ='${req.params.userID}'`, function (err, resultat) {
+        if (err) throw  res.status(400).send("there is an error");
+
     console.log("Number of records deleted: " + result.affectedRows);
-    res.status(200).send("This product is  deleted");
-  });
+    console.log("Number of records deleted: " + resultat.affectedRows);
+    res.status(200).send("The data  is  deleted")
+  })
+})
 });
+
 
 app.delete("/products/:productsID", (req, res) => {
   sql.query(

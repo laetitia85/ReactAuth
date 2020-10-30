@@ -32,8 +32,8 @@ class Header extends Component {
                 Add Product
               </Nav.Link>
 
-              <Nav.Link as={Link} to="/myorders">
-               My Orders
+              <Nav.Link as={Link} to="/mycart">
+               My Cart
               </Nav.Link>
             </Nav>
 

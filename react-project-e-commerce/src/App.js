@@ -34,7 +34,7 @@ class App extends Component {
               {this.props.token ? <CreateProducts /> : <Redirect to="/" />}
             </Route>
             <Route exact={true} path="/editproducts/:id" component={EditProducts}/>
-               <Route exact={true} path="/myorders">
+               <Route exact={true} path="/mycart">
               {this.props.token ? <MyOrders /> : <Redirect to="/" />}
             </Route>
             <Route exact={true} path="/" component={Home} />

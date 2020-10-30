@@ -81,7 +81,7 @@ class CreateProducts extends Component {
           if(result.status === 200){
 
             let y= {
-              id: result.data.id,
+              products_id: result.data.id,
               name: this.state.name,
               category: this.state.category,
               price: this.state.price,
